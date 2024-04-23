@@ -1,0 +1,4 @@
+app:
+  page_size: 10
+search:
+  address: "http://localhost:9200"
