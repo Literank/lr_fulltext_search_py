@@ -5,6 +5,7 @@ import yaml
 @dataclass
 class SearchConfig:
     address: str
+    index: str
 
 
 @dataclass
