@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from typing import List
 
 from elasticsearch import Elasticsearch
 
@@ -17,3 +18,12 @@ class ElasticSearchEngine(BookManager):
     def index_book(self, b: Book) -> str:
         result = self.client.index(index=INDEX_BOOK, document=asdict(b))
         return result['_id']
+
+    def search_books(self, query: str) -> List[Book]:
+        response = self.client.search(index=INDEX_BOOK, query={
+            "multi_match": {
+                "query": query,
+                "fields": ["title", "author", "content"]
+            }
+        })
+        return [hit["_source"] for hit in response["hits"]["hits"]]

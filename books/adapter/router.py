@@ -34,3 +34,7 @@ def make_router(app: FastAPI, wire_helper: WireHelper):
     async def create_book(b: Book):
         book_id = rest_handler.create_book(b)
         return {"id": book_id}
+
+    @app.get("/books")
+    async def search_books(q: str):
+        return rest_handler.book_operator.search_books(q)
