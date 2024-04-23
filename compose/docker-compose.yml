@@ -1,0 +1,18 @@
+services:
+  lr-fulltext-books-py:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./config.yml:/app/config.yml
+    depends_on:
+      es:
+        condition: service_started
+  es:
+    image: bitnami/elasticsearch:latest
+    ports:
+      - 9200:9200
+    volumes:
+      - ~/lr-es-data:/bitnami/elasticsearch/data
